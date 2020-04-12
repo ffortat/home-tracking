@@ -17,17 +17,24 @@ export class ProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.productService.getProducts()
-      .subscribe((products) => {
-        this.productList = products;
-      });
+    this.updateProductList();
   }
 
   public addProduct(): void {
     this.dialog
       .open(AddProductComponent)
       .afterClosed().subscribe((result) => {
+        this.productService.addProduct(result)
+          .subscribe(() => {
+            this.updateProductList();
+          });
+      });
+  }
 
+  private updateProductList() {
+    this.productService.getProducts()
+      .subscribe((products) => {
+        this.productList = products;
       });
   }
 }
