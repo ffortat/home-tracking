@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from './product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddProductComponent } from './add-product/add-product.component';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -24,10 +25,13 @@ export class ProductComponent implements OnInit {
     this.dialog
       .open(AddProductComponent, {data: {productList: this.productList}})
       .afterClosed().subscribe((result) => {
-        this.productService.addProduct(result)
-          .subscribe(() => {
-            this.updateProductList();
-          });
+        const saveObservables = [];
+        result.forEach((product) => {
+          saveObservables.push(this.productService.addProduct(product));
+        })
+        combineLatest(saveObservables).subscribe(() => {
+          this.updateProductList();
+        });
       });
   }
 
