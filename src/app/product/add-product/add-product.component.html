@@ -2,7 +2,14 @@
 <mat-dialog-content>
   <form [formGroup]="productForm" novalidate>
     <mat-form-field>
-      <input matInput placeholder="Product name" formControlName="name">
+      <input matInput placeholder="Product name" formControlName="name" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete"
+                        [displayWith]="displayProductName"
+                        (optionSelected)="fillFormWithProduct($event.option.value)">
+        <mat-option *ngFor="let product of filteredProductList | async" [value]="product">
+          {{ product.name }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
     <mat-form-field>
       <input matInput placeholder="Quantity" formControlName="quantity">

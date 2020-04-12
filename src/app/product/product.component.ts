@@ -22,7 +22,7 @@ export class ProductComponent implements OnInit {
 
   public addProduct(): void {
     this.dialog
-      .open(AddProductComponent)
+      .open(AddProductComponent, {data: {productList: this.productList}})
       .afterClosed().subscribe((result) => {
         this.productService.addProduct(result)
           .subscribe(() => {
