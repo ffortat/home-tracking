@@ -7,6 +7,8 @@ import { NavigationModule } from '../common/components/navigation/navigation.mod
 import { ProductComponent } from './product/product.component';
 import { TaskComponent } from './task/task.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AddProductComponent } from './product/add-product/add-product.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
@@ -21,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     AppComponent,
     ProductComponent,
     TaskComponent,
+    AddProductComponent,
   ],
   imports: [
     BrowserModule,
