@@ -1,34 +1,9 @@
-<h2 mat-dialog-title>Add a product</h2>
+<h2 mat-dialog-title>Add product(s)</h2>
 <mat-dialog-content>
-  <form [formGroup]="productForm" novalidate>
-    <mat-form-field>
-      <input matInput placeholder="Product name" formControlName="name" [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete"
-                        [displayWith]="displayProductName"
-                        (optionSelected)="fillFormWithProduct($event.option.value)">
-        <mat-option *ngFor="let product of filteredProductList | async" [value]="product">
-          {{ product.name }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Quantity" formControlName="quantity">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Unit" formControlName="unit">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Price" formControlName="price">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Date</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="date">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  </form>
+  <app-product-line *ngFor="let productLine of productLineList" [productList]="data.productList"></app-product-line>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
   <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="accent" (click)="addProduct()">Add</button>
+  <button mat-raised-button color="primary" (click)="addProductLine()">Add line</button>
+  <button mat-raised-button color="accent" (click)="addProducts()">Save</button>
 </mat-dialog-actions>

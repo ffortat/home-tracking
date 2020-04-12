@@ -1,1 +1,27 @@
-<p>product-line works!</p>
+<form [formGroup]="productForm" novalidate>
+  <mat-form-field class="large">
+    <input matInput placeholder="Product name" formControlName="name" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete"
+                      [displayWith]="displayProductName"
+                      (optionSelected)="fillFormWithProduct($event.option.value)">
+      <mat-option *ngFor="let product of filteredProductList | async" [value]="product">
+        {{ product.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field class="thin">
+    <input matInput placeholder="Quantity" formControlName="quantity">
+  </mat-form-field>
+  <mat-form-field class="thin">
+    <input matInput placeholder="Unit" formControlName="unit">
+  </mat-form-field>
+  <mat-form-field class="thin">
+    <input matInput placeholder="Price" formControlName="price">
+  </mat-form-field>
+  <mat-form-field class="regular">
+    <mat-label>Date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</form>

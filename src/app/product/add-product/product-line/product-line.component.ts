@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-line',
@@ -6,10 +9,51 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-line.component.scss']
 })
 export class ProductLineComponent implements OnInit {
+  @Input() private productList: any[];
 
-  constructor() { }
+  public filteredProductList: Observable<any[]>;
+  public productForm: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder
+  ) {
+    this.productForm = this.formBuilder.group({
+      name: [null, Validators.required],
+      quantity: [null, Validators.required],
+      unit: [null],
+      price: [null, Validators.required],
+      date: [null],
+    });
+  }
 
   ngOnInit(): void {
+    this.filteredProductList = this.productForm.controls.name.valueChanges
+      .pipe(
+        startWith(''),
+        map((value) => this.filterName(value))
+      );
+  }
+
+  public displayProductName(product): string {
+    return product && product.name ? product.name : '';
+  }
+
+  private filterName(productName: string): string[] {
+    const filterValue = productName && productName.toLowerCase ? productName.toLowerCase() : '';
+
+    return this.productList
+      .filter((product) => product.name.toLowerCase().includes(filterValue))
+      .sort((a, b) => a.name === b.name ? 0 : a.name > b.name ? 1 : -1);
+  }
+
+  public fillFormWithProduct(product: any): void {
+    this.productForm.setValue({
+      name: product,
+      quantity: product.quantity,
+      unit: product.unit,
+      price: product.price,
+      date: new Date().toISOString()
+    });
   }
 
 }
