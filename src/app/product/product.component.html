@@ -1,0 +1,9 @@
+<ul>
+  <li *ngFor="let product of productList">
+    {{ product.name }}
+  </li>
+</ul>
+
+<button mat-fab (click)="addProduct()">
+  <mat-icon>add</mat-icon>
+</button>
