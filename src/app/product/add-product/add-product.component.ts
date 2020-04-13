@@ -11,12 +11,14 @@ export class AddProductComponent implements OnInit {
   @ViewChildren(ProductLineComponent) productLines !: QueryList<ProductLineComponent>;
 
   public productLineList: any[];
+  public productList: any[];
 
   constructor(
     private dialogRef: MatDialogRef<AddProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.productLineList = [{}];
+    this.productList = this.filterProductList();
   }
 
   ngOnInit(): void {
@@ -32,5 +34,21 @@ export class AddProductComponent implements OnInit {
       product.name = product.name.name;
       return product;
     }));
+  }
+
+  private filterProductList(): any[] {
+    const productList = [];
+
+    this.data.productList.forEach((newProduct) => {
+      const productIndex = productList.findIndex((product) => product.name === newProduct.name);
+
+      if (productIndex === -1) {
+        productList.push(newProduct);
+      } else if (productList[productIndex].date < newProduct.date) {
+        productList[productIndex] = newProduct;
+      }
+    });
+
+    return productList;
   }
 }

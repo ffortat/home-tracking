@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Add product(s)</h2>
 <mat-dialog-content>
-  <app-product-line *ngFor="let productLine of productLineList" [productList]="data.productList"></app-product-line>
+  <app-product-line *ngFor="let productLine of productLineList" [productList]="productList"></app-product-line>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
   <button mat-raised-button mat-dialog-close>Cancel</button>
