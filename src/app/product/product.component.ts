@@ -25,13 +25,17 @@ export class ProductComponent implements OnInit {
     this.dialog
       .open(AddProductComponent, {data: {productList: this.productList}})
       .afterClosed().subscribe((result) => {
-        const saveObservables = [];
-        result.forEach((product) => {
-          saveObservables.push(this.productService.addProduct(product));
-        })
-        combineLatest(saveObservables).subscribe(() => {
-          this.updateProductList();
-        });
+        if (result) {
+          const saveObservables = [];
+
+          result.forEach((product) => {
+            saveObservables.push(this.productService.addProduct(product));
+          });
+
+          combineLatest(saveObservables).subscribe(() => {
+            this.updateProductList();
+          });
+        }
       });
   }
 
