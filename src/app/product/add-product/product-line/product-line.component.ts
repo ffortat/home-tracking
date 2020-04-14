@@ -53,12 +53,13 @@ export class ProductLineComponent implements OnInit {
   }
 
   public fillFormWithProduct(product: any): void {
+    const productValues = this.productForm.getRawValue();
     this.productForm.setValue({
       name: product,
       quantity: product.quantity,
       unit: product.unit,
       price: product.price,
-      date: new Date().toISOString()
+      date: productValues.date ? productValues.date : new Date().toISOString()
     });
   }
 
