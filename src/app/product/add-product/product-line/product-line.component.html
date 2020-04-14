@@ -13,7 +13,10 @@
     <input matInput placeholder="Quantity" formControlName="quantity">
   </mat-form-field>
   <mat-form-field class="thin">
-    <input matInput placeholder="Unit" formControlName="unit">
+    <mat-label>Unit</mat-label>
+    <mat-select formControlName="unit">
+      <mat-option *ngFor="let unit of units" [value]="unit">{{ unit }}</mat-option>
+    </mat-select>
   </mat-form-field>
   <mat-form-field class="thin">
     <input matInput placeholder="Price" formControlName="price">

@@ -13,6 +13,12 @@ export class ProductLineComponent implements OnInit {
 
   public filteredProductList: Observable<any[]>;
   public productForm: FormGroup;
+  public units = [
+    'kilogram',
+    'gram',
+    'liter',
+    'unit'
+  ];
 
   constructor(
     private formBuilder: FormBuilder
