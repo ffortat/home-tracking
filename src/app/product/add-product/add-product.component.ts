@@ -31,7 +31,8 @@ export class AddProductComponent implements OnInit {
   public addProducts(): void {
     this.dialogRef.close(this.productLines.map((productLine) => {
       const product = productLine.productForm.getRawValue();
-      product.name = product.name.name;
+      const productName = product.name;
+      product.name = productName.name ? productName.name : productName;
       return product;
     }));
   }
