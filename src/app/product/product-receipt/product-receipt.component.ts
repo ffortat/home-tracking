@@ -9,6 +9,7 @@ export class ProductReceiptComponent implements OnInit {
   @Input('products') public productList: any[];
   @Input('date') public date: string;
 
+  public displayedColumns = ['name', 'quantity', 'price'];
   public totalPrice = 0;
 
   constructor() {
