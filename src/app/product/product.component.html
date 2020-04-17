@@ -1,8 +1,4 @@
-<ul>
-  <li *ngFor="let product of productList">
-    {{ product.name }} - {{ product.quantity}}{{ product.unit }} - {{ product.price }} - {{ product.date}}
-  </li>
-</ul>
+<app-product-receipt *ngFor="let key of receiptKeys" [date]="key" [products]="receipts[key]"></app-product-receipt>
 
 <button mat-fab (click)="addProduct()">
   <mat-icon>add</mat-icon>

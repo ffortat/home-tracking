@@ -12,6 +12,7 @@ import { combineLatest } from 'rxjs';
 export class ProductComponent implements OnInit {
   public productList = [];
   public receipts = {};
+  public receiptKeys = [];
 
   constructor(
     private dialog: MatDialog,
@@ -57,7 +58,7 @@ export class ProductComponent implements OnInit {
     if (day.length < 2) { day = '0' + day; }
     if (month.length < 2) { month = '0' + month; }
 
-    return year + month + day;
+    return [year, month, day].join('-');
   }
 
   private sortIntoReceipts() {
@@ -70,5 +71,7 @@ export class ProductComponent implements OnInit {
 
       this.receipts[dateIndex].push(product);
     });
+
+    this.receiptKeys = Object.keys(this.receipts).sort((a, b) => a === b ? 0 : a > b ? -1 : 1);
   }
 }

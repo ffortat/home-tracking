@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-product-receipt',
@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-receipt.component.scss']
 })
 export class ProductReceiptComponent implements OnInit {
+  @Input('products') public productList: any[];
+  @Input('date') public date: string;
 
-  constructor() { }
+  public totalPrice = 0;
 
-  ngOnInit(): void {
+  constructor() {
   }
 
+  ngOnInit(): void {
+    this.totalPrice = this.productList.map((product) => product.price).reduce((a, b) => a + b);
+    this.totalPrice = Math.round(this.totalPrice * 100) / 100;
+  }
 }
