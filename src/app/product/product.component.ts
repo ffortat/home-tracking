@@ -11,6 +11,7 @@ import { combineLatest } from 'rxjs';
 })
 export class ProductComponent implements OnInit {
   public productList = [];
+  public receipts = {};
 
   constructor(
     private dialog: MatDialog,
@@ -43,6 +44,31 @@ export class ProductComponent implements OnInit {
     this.productService.getProducts()
       .subscribe((products) => {
         this.productList = products;
+        this.sortIntoReceipts();
       });
+  }
+
+  private formatDate(dateInput: string): string {
+    const date = new Date(dateInput);
+    let day = date.getDate().toString();
+    let month = (date.getMonth() + 1).toString();
+    const year = date.getFullYear().toString();
+
+    if (day.length < 2) { day = '0' + day; }
+    if (month.length < 2) { month = '0' + month; }
+
+    return year + month + day;
+  }
+
+  private sortIntoReceipts() {
+    this.productList.forEach((product) => {
+      const dateIndex = this.formatDate(product.date);
+
+      if (!this.receipts[dateIndex]) {
+        this.receipts[dateIndex] = [];
+      }
+
+      this.receipts[dateIndex].push(product);
+    });
   }
 }
