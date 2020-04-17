@@ -4,6 +4,7 @@ import { ProductComponent } from './product.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { ProductLineComponent } from './add-product/product-line/product-line.component';
 import { SharedMaterialModule } from '../../common/modules/shared-material.module';
+import { ProductReceiptComponent } from './product-receipt/product-receipt.component';
 
 
 
@@ -11,7 +12,8 @@ import { SharedMaterialModule } from '../../common/modules/shared-material.modul
   declarations: [
     ProductComponent,
     AddProductComponent,
-    ProductLineComponent
+    ProductLineComponent,
+    ProductReceiptComponent
   ],
   imports: [
     CommonModule,
