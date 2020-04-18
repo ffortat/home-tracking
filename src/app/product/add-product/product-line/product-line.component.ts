@@ -9,6 +9,7 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./product-line.component.scss']
 })
 export class ProductLineComponent implements OnInit {
+  @Input() private placeList: any[];
   @Input() private productList: any[];
 
   public filteredProductList: Observable<any[]>;
@@ -29,6 +30,7 @@ export class ProductLineComponent implements OnInit {
       unit: [null],
       price: [null, Validators.required],
       date: [null],
+      place: [null],
     });
   }
 
@@ -59,7 +61,8 @@ export class ProductLineComponent implements OnInit {
       quantity: product.quantity,
       unit: product.unit,
       price: product.price,
-      date: productValues.date ? productValues.date : new Date().toISOString()
+      date: productValues.date ? productValues.date : new Date().toISOString(),
+      place: product.place,
     });
   }
 

@@ -27,4 +27,10 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
+  <mat-form-field class="large">
+    <mat-label>Place</mat-label>
+    <mat-select formControlName="place">
+      <mat-option *ngFor="let place of placeList" [value]="place['_id']">{{ place.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
 </form>

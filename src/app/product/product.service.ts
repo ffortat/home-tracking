@@ -18,4 +18,8 @@ export class ProductService {
   public addProduct(product): Observable<any> {
     return this.http.post('http://localhost:8081/api/product', product);
   }
+
+  public getPlaces(): Observable<any> {
+    return this.http.get('http://localhost:8081/api/place');
+  }
 }

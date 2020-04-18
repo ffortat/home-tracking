@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProductLineComponent } from './product-line/product-line.component';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-add-product',
@@ -10,13 +11,20 @@ import { ProductLineComponent } from './product-line/product-line.component';
 export class AddProductComponent implements OnInit {
   @ViewChildren(ProductLineComponent) productLines !: QueryList<ProductLineComponent>;
 
+  public placeList: any[];
   public productLineList: any[];
   public productList: any[];
 
   constructor(
+    private productService: ProductService,
     private dialogRef: MatDialogRef<AddProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.productService.getPlaces()
+      .subscribe((places) => {
+        this.placeList = places;
+      });
+
     this.productLineList = [{}];
     this.productList = this.filterProductList();
   }
