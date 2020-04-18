@@ -9,7 +9,7 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./product-line.component.scss']
 })
 export class ProductLineComponent implements OnInit {
-  @Input() private placeList: any[];
+  @Input() public placeList: any[];
   @Input() private productList: any[];
 
   public filteredProductList: Observable<any[]>;

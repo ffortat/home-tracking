@@ -20,10 +20,7 @@ export class AddProductComponent implements OnInit {
     private dialogRef: MatDialogRef<AddProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.productService.getPlaces()
-      .subscribe((places) => {
-        this.placeList = places;
-      });
+    this.placeList = this.productService.getPlaces();
 
     this.productLineList = [{}];
     this.productList = this.filterProductList();
