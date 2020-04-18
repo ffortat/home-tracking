@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PlaceService } from './place.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class ProductService {
   ) { }
 
   public getProducts(): Observable<any> {
-    return this.http.get('http://localhost:8081/api/product');
+    return this.http.get(environment.apiUrl + '/api/product');
   }
 
   public addProduct(product): Observable<any> {
-    return this.http.post('http://localhost:8081/api/product', product);
+    return this.http.post(environment.apiUrl + '/api/product', product);
   }
 
   public getPlaces(): any[] {
