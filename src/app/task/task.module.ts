@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { TaskComponent } from './task.component';
+import { SharedMaterialModule } from '../../common/modules/shared-material.module';
 
 
 
@@ -11,7 +12,8 @@ import { TaskComponent } from './task.component';
     TaskComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedMaterialModule,
   ]
 })
 export class TaskModule { }
