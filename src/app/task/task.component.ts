@@ -24,17 +24,15 @@ export class TaskComponent implements OnInit {
   public addTask(): void {
     this.dialog
       .open(AddTaskComponent, {data: {}})
-      .afterClosed().subscribe((result) => {
-        if (result) {
+      .afterClosed().subscribe((task) => {
+        if (task) {
           const saveObservables = [];
 
-          result.forEach((task) => {
-            saveObservables.push(this.taskService.addTask(task));
-          });
-
-          combineLatest(saveObservables).subscribe(() => {
-            this.updateTaskList();
-          });
+          this.taskService
+            .addTask(task)
+            .subscribe(() => {
+              this.updateTaskList();
+            });
         }
       });
   }
