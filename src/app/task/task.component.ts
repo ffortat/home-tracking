@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { combineLatest } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { AddTaskComponent } from './add-task/add-task.component';
+import { TaskService } from './task.service';
 
 @Component({
   selector: 'app-task',
@@ -6,10 +10,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./task.component.scss']
 })
 export class TaskComponent implements OnInit {
+  public taskList = [];
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog,
+    private taskService: TaskService,
+  ) { }
 
   ngOnInit(): void {
+    this.updateTaskList();
   }
 
+  public addTask(): void {
+  }
+
+  private updateTaskList() {
+    this.taskService.getTasks()
+      .subscribe((tasks) => {
+        this.taskList = tasks;
+      });
+  }
 }
