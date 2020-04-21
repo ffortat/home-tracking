@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { combineLatest } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { TaskService } from './task.service';

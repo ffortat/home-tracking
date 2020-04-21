@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-task',
@@ -6,10 +8,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-task.component.scss']
 })
 export class AddTaskComponent implements OnInit {
+  public taskForm: FormGroup;
+  public frequencies = [
+    'hourly',
+    'daily',
+    'weekly',
+    'monthly',
+    'yearly'
+  ];
 
-  constructor() { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<AddTaskComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {
+    this.taskForm = this.formBuilder.group({
+      name: [null],
+      frequency: [null],
+    });
+  }
 
   ngOnInit(): void {
   }
 
+  public addTask(): void {
+    this.dialogRef.close(this.taskForm.getRawValue());
+  }
 }
