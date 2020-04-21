@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductModule } from './product/product.module';
 import { SharedMaterialModule } from '../common/modules/shared-material.module';
+import { TaskModule } from './task/task.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { SharedMaterialModule } from '../common/modules/shared-material.module';
     AppRoutingModule,
     NavigationModule,
     ProductModule,
+    TaskModule,
     HttpClientModule,
     BrowserAnimationsModule,
     SharedMaterialModule

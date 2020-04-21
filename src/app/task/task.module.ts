@@ -14,6 +14,9 @@ import { SharedMaterialModule } from '../../common/modules/shared-material.modul
   imports: [
     CommonModule,
     SharedMaterialModule,
+  ],
+  exports: [
+    TaskComponent,
   ]
 })
 export class TaskModule { }
