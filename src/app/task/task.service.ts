@@ -19,4 +19,8 @@ export class TaskService {
   public addTask(task: any): Observable<any> {
     return this.http.post(environment.apiUrl + '/api/task', task);
   }
+
+  public addAction(action: any): Observable<any> {
+    return this.http.post(environment.apiUrl + '/api/action', action);
+  }
 }
