@@ -62,7 +62,7 @@ export class ProductLineComponent implements OnInit {
       unit: product.unit,
       price: product.price,
       date: productValues.date ? productValues.date : new Date().toISOString(),
-      place: product.place,
+      place: product.place ? product.place : '',
     });
   }
 
