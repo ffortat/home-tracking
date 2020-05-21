@@ -1,6 +1,11 @@
-<ul>
-  <li *ngFor="let task of taskList">{{ task.name }}</li>
-</ul>
+<div class="tasks">
+    <mat-checkbox *ngFor="let task of taskList"
+                  [checked]="isActionDone(task)"
+                  (change)="actionTask(task, $event)"
+    >
+      {{ task.name }}
+    </mat-checkbox>
+</div>
 
 <button mat-fab (click)="addTask()">
   <mat-icon>add</mat-icon>

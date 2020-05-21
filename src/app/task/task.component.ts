@@ -36,6 +36,20 @@ export class TaskComponent implements OnInit {
       });
   }
 
+  public actionTask(task: any, event): void {
+    if (event.checked) {
+      this.taskService
+        .addAction({task: task._id, date: new Date().toISOString()})
+        .subscribe(() => {
+          this.updateTaskList();
+        });
+    }
+  }
+
+  public isActionDone(task): boolean {
+    return false;
+  }
+
   private updateTaskList() {
     this.taskService.getTasks()
       .subscribe((tasks) => {
