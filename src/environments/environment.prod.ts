@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://tracking.api.maxgun.fr'
+  apiUrl: 'https://tracking.api.maxgun.fr'
 };
