@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { TaskService } from './task.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-task',
@@ -47,6 +48,10 @@ export class TaskComponent implements OnInit {
   }
 
   public isActionDone(task): boolean {
+    if (task.lastAction) {
+      return new Date(task.start) < new Date(task.lastAction.date);
+    }
+
     return false;
   }
 
@@ -54,6 +59,40 @@ export class TaskComponent implements OnInit {
     this.taskService.getTasks()
       .subscribe((tasks) => {
         this.taskList = tasks;
+
+        const now = moment();
+
+        this.taskList.forEach((task) => {
+          const startDate = moment(task.start);
+
+          switch (task.frequency) {
+            case 'daily':
+              startDate.set({
+                dayOfYear: now.dayOfYear(),
+                year: now.year()
+              });
+
+              if (startDate.isAfter(now)) {
+                startDate.subtract(task.interval, 'days');
+              }
+
+              break;
+            case 'weekly':
+              startDate.set({
+                week: now.week(),
+                year: now.year()
+              });
+
+              if (startDate.isAfter(now)) {
+                startDate.subtract(task.interval, 'weeks');
+              }
+              break;
+            default:
+              console.log(task.name, task.frequency);
+          }
+
+          task.start = startDate.toISOString();
+        });
       });
   }
 }
