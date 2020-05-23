@@ -23,4 +23,8 @@ export class TaskService {
   public addAction(action: any): Observable<any> {
     return this.http.post(environment.apiUrl + '/api/action', action);
   }
+
+  public removeAction(actionId: string): Observable<any> {
+    return this.http.delete(environment.apiUrl + '/api/action/' + actionId);
+  }
 }

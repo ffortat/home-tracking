@@ -44,6 +44,12 @@ export class TaskComponent implements OnInit {
         .subscribe(() => {
           this.updateTaskList();
         });
+    } else {
+      this.taskService
+        .removeAction(task.lastAction._id)
+        .subscribe(() => {
+          this.updateTaskList();
+        });
     }
   }
 
