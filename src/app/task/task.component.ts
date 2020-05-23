@@ -93,6 +93,16 @@ export class TaskComponent implements OnInit {
                 startDate.subtract(task.interval, 'weeks');
               }
               break;
+            case 'monthly':
+              startDate.set({
+                month: now.month(),
+                year: now.year()
+              });
+
+              if (startDate.isAfter(now)) {
+                startDate.subtract(task.interval, 'months');
+              }
+              break;
             default:
               console.log(task.name, task.frequency);
           }
