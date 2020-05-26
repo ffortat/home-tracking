@@ -11,6 +11,11 @@ import * as moment from 'moment';
 })
 export class TaskComponent implements OnInit {
   public taskList = [];
+  public taskLists = {
+    today: [],
+    thisWeek: [],
+    thisMonth: []
+  };
 
   constructor(
     private dialog: MatDialog,
@@ -74,12 +79,25 @@ export class TaskComponent implements OnInit {
           switch (task.frequency) {
             case 'daily':
               this.refreshStartDateDaily(startDate, now, task);
+              this.taskLists.today.push(task);
               break;
             case 'weekly':
               this.refreshStartDateWeekly(startDate, now, task);
+              if (now.isAfter(startDate.clone().add(1, 'weeks').subtract(1, 'days'))) {
+                this.taskLists.today.push(task);
+              } else {
+                this.taskLists.thisWeek.push(task);
+              }
               break;
             case 'monthly':
               this.refreshStartDateMonthly(startDate, now, task);
+              if (now.isAfter(startDate.clone().add(1, 'months').subtract(1, 'days'))) {
+                this.taskLists.today.push(task);
+              } else if (now.isAfter(startDate.clone().add(1, 'months').subtract(1, 'weeks'))) {
+                this.taskLists.thisWeek.push(task);
+              } else {
+                this.taskLists.thisMonth.push(task);
+              }
               break;
             default:
               console.log(task.name, task.frequency);
