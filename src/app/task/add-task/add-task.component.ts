@@ -22,8 +22,10 @@ export class AddTaskComponent implements OnInit {
     private dialogRef: MatDialogRef<AddTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
+    const today = new Date();
     this.taskForm = this.formBuilder.group({
       name: [null],
+      start: [new Date(today.getFullYear(), today.getMonth(), today.getDate())],
       frequency: [null],
     });
   }
