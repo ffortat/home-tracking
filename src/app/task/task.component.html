@@ -1,10 +1,31 @@
 <div class="tasks">
-    <mat-checkbox *ngFor="let task of taskList"
-                  [checked]="isActionDone(task)"
-                  (change)="actionTask(task, $event)"
-    >
-      {{ task.name }}
-    </mat-checkbox>
+  <h2>Today</h2>
+  <mat-checkbox *ngFor="let task of taskLists.today"
+                [checked]="isActionDone(task)"
+                (change)="actionTask(task, $event)"
+  >
+    {{ task.name }}
+  </mat-checkbox>
+</div>
+
+<div class="tasks">
+  <h2>This week</h2>
+  <mat-checkbox *ngFor="let task of taskLists.thisWeek"
+                [checked]="isActionDone(task)"
+                (change)="actionTask(task, $event)"
+  >
+    {{ task.name }}
+  </mat-checkbox>
+</div>
+
+<div class="tasks">
+  <h2>This month</h2>
+  <mat-checkbox *ngFor="let task of taskLists.thisMonth"
+                [checked]="isActionDone(task)"
+                (change)="actionTask(task, $event)"
+  >
+    {{ task.name }}
+  </mat-checkbox>
 </div>
 
 <button mat-fab (click)="addTask()">
