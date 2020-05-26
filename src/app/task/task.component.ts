@@ -14,7 +14,8 @@ export class TaskComponent implements OnInit {
   public taskLists = {
     today: [],
     thisWeek: [],
-    thisMonth: []
+    thisMonth: [],
+    done: []
   };
 
   constructor(
@@ -70,6 +71,12 @@ export class TaskComponent implements OnInit {
     this.taskService.getTasks()
       .subscribe((tasks) => {
         this.taskList = tasks;
+        this.taskLists = {
+          today: [],
+          thisWeek: [],
+          thisMonth: [],
+          done: []
+        };
 
         const now = moment();
 
@@ -79,31 +86,41 @@ export class TaskComponent implements OnInit {
           switch (task.frequency) {
             case 'daily':
               this.refreshStartDateDaily(startDate, now, task);
-              this.taskLists.today.push(task);
+              if (this.isActionDone(task)) {
+                this.taskLists.done.push(task);
+              } else {
+                this.taskLists.today.push(task);
+              }
               break;
             case 'weekly':
               this.refreshStartDateWeekly(startDate, now, task);
-              if (now.isAfter(startDate.clone().add(1, 'weeks').subtract(1, 'days'))) {
-                this.taskLists.today.push(task);
+              if (this.isActionDone(task)) {
+                this.taskLists.done.push(task);
               } else {
-                this.taskLists.thisWeek.push(task);
+                if (now.isAfter(startDate.clone().add(1, 'weeks').subtract(1, 'days'))) {
+                  this.taskLists.today.push(task);
+                } else {
+                  this.taskLists.thisWeek.push(task);
+                }
               }
               break;
             case 'monthly':
               this.refreshStartDateMonthly(startDate, now, task);
-              if (now.isAfter(startDate.clone().add(1, 'months').subtract(1, 'days'))) {
-                this.taskLists.today.push(task);
-              } else if (now.isAfter(startDate.clone().add(1, 'months').subtract(1, 'weeks'))) {
-                this.taskLists.thisWeek.push(task);
+              if (this.isActionDone(task)) {
+                this.taskLists.done.push(task);
               } else {
-                this.taskLists.thisMonth.push(task);
+                if (now.isAfter(startDate.clone().add(1, 'months').subtract(1, 'days'))) {
+                  this.taskLists.today.push(task);
+                } else if (now.isAfter(startDate.clone().add(1, 'months').subtract(1, 'weeks'))) {
+                  this.taskLists.thisWeek.push(task);
+                } else {
+                  this.taskLists.thisMonth.push(task);
+                }
               }
               break;
             default:
               console.log(task.name, task.frequency);
           }
-
-          task.start = startDate.toISOString();
         });
       });
   }
@@ -117,6 +134,7 @@ export class TaskComponent implements OnInit {
     if (startDate.isAfter(now)) {
       startDate.subtract(task.interval, 'months');
     }
+    task.start = startDate.toISOString();
   }
 
   private refreshStartDateWeekly(startDate: moment.Moment, now: moment.Moment, task): void {
@@ -128,6 +146,7 @@ export class TaskComponent implements OnInit {
     if (startDate.isAfter(now)) {
       startDate.subtract(task.interval, 'weeks');
     }
+    task.start = startDate.toISOString();
   }
 
   private refreshStartDateDaily(startDate: moment.Moment, now: moment.Moment, task): void {
@@ -139,5 +158,6 @@ export class TaskComponent implements OnInit {
     if (startDate.isAfter(now)) {
       startDate.subtract(task.interval, 'days');
     }
+    task.start = startDate.toISOString();
   }
 }

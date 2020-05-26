@@ -28,6 +28,16 @@
   </mat-checkbox>
 </div>
 
+<div class="tasks">
+  <h2>Done</h2>
+  <mat-checkbox *ngFor="let task of taskLists.done"
+                [checked]="isActionDone(task)"
+                (change)="actionTask(task, $event)"
+  >
+    {{ task.name }}
+  </mat-checkbox>
+</div>
+
 <button mat-fab (click)="addTask()">
   <mat-icon>add</mat-icon>
 </button>
