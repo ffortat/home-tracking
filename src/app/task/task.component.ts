@@ -61,7 +61,7 @@ export class TaskComponent implements OnInit {
     return false;
   }
 
-  private updateTaskList() {
+  private updateTaskList(): void {
     this.taskService.getTasks()
       .subscribe((tasks) => {
         this.taskList = tasks;
@@ -73,35 +73,13 @@ export class TaskComponent implements OnInit {
 
           switch (task.frequency) {
             case 'daily':
-              startDate.set({
-                dayOfYear: now.dayOfYear(),
-                year: now.year()
-              });
-
-              if (startDate.isAfter(now)) {
-                startDate.subtract(task.interval, 'days');
-              }
-
+              this.refreshStartDateDaily(startDate, now, task);
               break;
             case 'weekly':
-              startDate.set({
-                week: now.week(),
-                year: now.year()
-              });
-
-              if (startDate.isAfter(now)) {
-                startDate.subtract(task.interval, 'weeks');
-              }
+              this.refreshStartDateWeekly(startDate, now, task);
               break;
             case 'monthly':
-              startDate.set({
-                month: now.month(),
-                year: now.year()
-              });
-
-              if (startDate.isAfter(now)) {
-                startDate.subtract(task.interval, 'months');
-              }
+              this.refreshStartDateMonthly(startDate, now, task);
               break;
             default:
               console.log(task.name, task.frequency);
@@ -110,5 +88,38 @@ export class TaskComponent implements OnInit {
           task.start = startDate.toISOString();
         });
       });
+  }
+
+  private refreshStartDateMonthly(startDate: moment.Moment, now: moment.Moment, task): void {
+    startDate.set({
+      month: now.month(),
+      year: now.year()
+    });
+
+    if (startDate.isAfter(now)) {
+      startDate.subtract(task.interval, 'months');
+    }
+  }
+
+  private refreshStartDateWeekly(startDate: moment.Moment, now: moment.Moment, task): void {
+    startDate.set({
+      week: now.week(),
+      year: now.year()
+    });
+
+    if (startDate.isAfter(now)) {
+      startDate.subtract(task.interval, 'weeks');
+    }
+  }
+
+  private refreshStartDateDaily(startDate: moment.Moment, now: moment.Moment, task): void {
+    startDate.set({
+      dayOfYear: now.dayOfYear(),
+      year: now.year()
+    });
+
+    if (startDate.isAfter(now)) {
+      startDate.subtract(task.interval, 'days');
+    }
   }
 }
